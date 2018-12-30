@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'magazine/css/news.css' %}">
+{% endblock %}
+{% block title %}ماهنامه هوانوردی{% endblock %}
+
+{% block content %}
+    <div class="news">
+        {% for item in news %}
+           <div class="row">
+                <a href="{% url 'news:retrive_news'%}?id={{ item.id }}">
+                    <div class="col-xs-12 col-sm-6 context">
+                        <h4>{{ item.title }}</h4>
+                        <br>
+                        <h6>{{ item.writer }}</h6>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 news_img img-responsive">
+                        <img src="{{ item.image }}" alt="">
+                    </div>
+                </a>
+            </div>
+            <hr>
+        {% endfor %}
+        <div class="paging">
+            <span class="step-links">
+                {% if news.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ news.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ news.number }} of {{ news.paginator.num_pages }}.
+                </span>
+
+                {% if news.has_next %}
+                    <a href="?page={{ news.next_page_number }}">next</a>
+                    <a href="?page={{ news.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+
+{% endblock %}

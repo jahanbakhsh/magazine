@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'magazine/css/contact_us.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <section class="container" id="contact-add">
+        <div id="address" class="col-xs-12">
+            <p>آدرس: {{ contact_us.address }}</p>
+        </div>
+        <div id="postalcode" class="col-xs-12">
+            <p>کد پستی: {{ contact_us.postalcode }}</p>
+        </div>
+        <div id="telephone" class="col-xs-12">
+            <p>تلفن: {{ contact_us.tel }}</p>
+        </div>
+        <div id="email" class="col-xs-12">
+            <p> ایمیل:{{ contact_us.email }} </p>
+        </div>
+    </section>
+    <section class="container" id="contact-form">
+        <form  action="">
+            {% csrf_token %}
+            <div class="col-xs-12 form-item">
+                <p id="form-caption">{{ contact_us.message }}</p>
+            </div>
+            <div  class="col-md-6 col-xs-12 form-item">
+                <label for="name"> نام</label>
+                <br>
+                <input id="form-name" type="text" name="name" placeholder=" نام خود را وارد کنید">
+            </div>
+            <div  class="col-md-6 col-xs-12 form-item">
+                <label for="email">ایمیل</label>
+                <br>
+                <input id="form-email" type="email" name="email"  placeholder="ایمیل خود را وارد کنید">
+            </div>
+            <div class="col-xs-12 form-item">
+                <label for="message">پیام</label>
+                <br>
+                <textarea id="form-message" name="message" placeholder="متن پیام خود را وارد کنید"></textarea>
+            </div>
+        </form>
+            <div class="col-xs-12 form-item">
+                <button id="form-submit" type="button" class="btn btn-primary">ارسال</button>
+            </div>
+    </section>
+{% endblock %}
+
+{% block extra_body %}
+    <script src="{% static 'magazine/js/contact_us.js' %}"></script>
+
+{% endblock %}

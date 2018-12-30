@@ -1,0 +1,17 @@
+.news{
+    border: 10px solid white;
+    border-radius: 5px;
+}
+.news_img img {
+    width: 250px;
+    max-width: 250px;
+    float: left;
+    margin-left: 10px;
+}
+.paging{
+    display: flex;
+    justify-content: center;
+}
+p{
+    text-align: justify;
+}

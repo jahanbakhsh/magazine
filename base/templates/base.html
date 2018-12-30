@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+<head>
+    <title>{% block title %}ماهنامه هوانوردی{% endblock %}</title>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block extra_head %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'magazine/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'magazine/css/bootstrap-rtl.min_.css' %}">
+    <link rel="stylesheet" href="{% static 'magazine/css/base.css' %}">
+    <script src="{% static 'magazine/js/jquery.min.js' %}"></script>
+    <script src="{% static 'magazine/js/bootstrap.min.js' %}"></script>
+  </head>
+</head>
+<body>
+    <header>
+        <!-- logo and date -->
+        <div id="logo-sec">
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 logo">
+                    <!--
+                    <img src="{% static 'magazine/img/logo/logo.png' %}" alt="">
+                    -->
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 date">
+                    <div class="col-xs-12">
+                        <span id="date">date</span>
+                    </div>
+                    <div id="search-sec" class="col-xs-12">
+                        <form class="navbar-form navbar-left" action="#">
+                          <div class="input-group">
+                            <input type="text" class="form-control" placeholder="جستجو">
+                            <div class="input-group-btn">
+                              <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- navbar -->
+        <div id="navbar-sec">
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                  <ul class="nav navbar-nav">
+                    <li ><a href="/">خانه</a></li>
+                    <li><a href="{% url 'news:retrive_news' %}?type=iran">هوانوردی ایران</a></li>
+                    <li><a href="{% url 'news:retrive_news' %}?type=international">هوانوردی جهان</a></li>
+                    <li><a href="#">چند رسانه ای</a></li>
+                    <li><a href="#">آرشیو</a></li>
+                    <li><a href="{% url 'base:subscription' %}">اشتراک</a></li>
+                    <li><a href="/shop">خرید </a></li>
+                    <li><a href="{% url 'base:contact_us' %}"> تماس با ما</a></li>
+                    <li><a href="#">درباره ما</a></li>
+                  </ul>
+                  {% if user.is_authenticated %}
+                      <ul class="navbar-left">
+                         {{ user.username }}
+                         <p><a href="{% url 'base:logout' %}">خروج</a></p>
+                      </ul>
+
+                  {% else %}
+                    <ul class="nav navbar-left">
+                        <li>
+                                 <!-- Signin & Signup -->
+                            <a  href="#" data-toggle="modal" data-target=".login-register-form">
+                               ورود/ثبت نام
+                            </a>
+                        </li>
+                    </ul>
+                  {% endif %}
+                </div>
+              </div>
+
+            </nav>
+        </div>
+        <!-- login register modal -->
+            <div class="container">
+                 <div class="row">
+                                <!-- Login / Register Modal-->
+                                <div class="modal fade login-register-form" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active"><a data-toggle="tab" href="#login-form"> ورود <span class="glyphicon glyphicon-user"></span></a></li>
+                                                    <li><a data-toggle="tab" href="#registration-form"> ثبت نام <span class="glyphicon glyphicon-pencil"></span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="tab-content">
+                                                    <div id="login-form" class="tab-pane fade in active">
+                                                        <form action="{% url 'base:login' %}" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <label for="email">نام کاربری:</label>
+                                                                <input type="text" class="form-control" id="username" placeholder="نوشتن نام کاربری" name="username">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="pwd">رمز عبور:</label>
+                                                                <input type="password" class="form-control" id="pwd" placeholder="نوشتن رمز عبور" name="password">
+                                                            </div>
+                                                            <div class="checkbox">
+                                                                <label><input type="checkbox" name="remember"> من را به خاطر بسپار</label>
+                                                            </div>
+                                                            <button id="login-btn" type="submit" class="btn btn-default">ورود</button>
+                                                        </form>
+                                                    </div>
+                                                    <div id="registration-form" class="tab-pane fade">
+                                                        <form action="{% url 'base:register' %}" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <label for="name">نام کاربری:</label>
+                                                                <input type="text" class="form-control" id="name" placeholder="نام کاربری خود را وارد کنید" name="name">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="newemail">ایمیل:</label>
+                                                                <input type="email" class="form-control" id="newemail" placeholder="ایمیل خود را وارد کنید" name="newemail">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="newpwd">رمز عبور:</label>
+                                                                <input type="password" class="form-control" id="newpwd" placeholder="رمز عبور جدید" name="newpwd">
+                                                            </div>
+                                                            <button id="register-btn" type="submit" class="btn btn-default">ثبت نام</button>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+        <!--                                    <div class="modal-footer">-->
+        <!--                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <!--                                    </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+            </div>
+        </div>
+    </header>
+    <section>
+        {% block content %}
+        {% endblock %}
+    </section>
+    <!-- footer -->
+    <div class="footer">
+        <div class="row">
+            <p>@۲۰۱۸ کلیه حقوق مربوط به مجله تخصصی ماهنامه هوانوردی می باشد. </p>
+        </div>
+    </div>
+    {% block extra_body %}{% endblock %}
+    <script src="{% static 'magazine/js/tdate.js' %}"></script>
+    <script src="{% static 'magazine/js/user.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'magazine/css/news.css' %}">
+{% endblock %}
+{% block title %}ماهنامه هوانوردی{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for item in news %}
+            <div id="news_title">
+                <h3>{{ item.title }}</h3>
+            </div>
+            <div id="news_img">
+                <img class="img-responsive" src="{{ item.image }}" alt="">
+            </div>
+            <div id ="news_content">
+                <p>{{ item.content }}</p>
+            </div>
+            <div id="news_writer">
+                <span>
+                    {{ item.writer }}
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

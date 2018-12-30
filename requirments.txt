@@ -1,0 +1,5 @@
+Django==2.1.4
+django-jet==1.0.8
+Pillow
+djangorestframework==3.9.0
+mysqlclient==1.3.14

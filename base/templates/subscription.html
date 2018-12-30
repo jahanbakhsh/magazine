@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'magazine/css/subscription.css' %}">
+{% endblock %}
+{% block title %}خرید اشتراک{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form action="subscription/buy" class="form-horizontal" method="post">
+            <div id="div_first_name" class="form-group">
+                <lable for="first_name" class="col-sm-offset-4 col-sm-2 required">نام</lable>
+                <input type="text" id="first_name" class="col-sm-6" placeholder="نام">
+            </div>
+            <div id="div_last_name" class="form-group">
+                <lable for="last_name" class="col-sm-offset-4 col-sm-2 required">نام خانوادگی</lable>
+                <input type="text" id="last_name" class="col-sm-6" placeholder="نام خانوادگی">
+            </div>
+            <div id="div_email" class="form-group">
+                <lable for="email" class="col-sm-offset-4 col-sm-2 required"> ایمیل</lable>
+                <input type="text" id="email" class="col-sm-6" placeholder="ایمیل ">
+            </div>
+            <div id="div_address" class="form-group">
+                <lable for="address" class="col-sm-offset-4 col-sm-2 required">آدرس </lable>
+                <textarea type="text" id="address" class="col-sm-6" placeholder="آدرس "></textarea>
+            </div>
+            <div id="div_postal_code" class="form-group">
+                <lable for="postal_code" class="col-sm-offset-4 col-sm-2 required">کد پستی </lable>
+                <input type="text" id="postal_code" class="col-sm-6" placeholder="کد پستی ">
+            </div>
+            <div id="div_phone" class="form-group">
+                <lable for="phone" class="col-sm-offset-4 col-sm-2 required">شماره تماس</lable>
+                <input type="text" id="phone" class="col-sm-6" placeholder="شماره تماس">
+            </div>
+            <div id="div_type" class="form-group">
+                <lable for="type" class="col-sm-offset-4 col-sm-2 required">اشتراک درخواستی </lable>
+                <select type="type" id="type" class="col-sm-6" >
+                    {% for item in type%}
+                        <option value="{{ item.id }}">{{ item.title }} و {{ item.description }} ({{ item.discount_fee }}{{ item.currency }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div id="div_roles" class="form-group" >
+                 <div class="col-xs-0 col-sm-6"></div>
+                 <div class="col-xs-12 col-sm-6">
+                     <input type="checkbox" id="btn-role">
+                     <lable for="btn-role">تمام <a data-toggle="modal" data-target="#roleModal">قوانین و مقررات </a >را می پذیرم.</lable>
+                 </div>
+            </div>
+            <div id="div_submit">
+                <boutton class="btn btn-primary" disabled>پرداخت و ثبت اشتراک</boutton>
+            </div>
+
+        </form>
+      <!-- Modal -->
+      <div class="modal fade" id="roleModal" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">قوانین و مقررات</h4>
+            </div>
+            <div class="modal-body">
+              <p>{{ txt }}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="btn-submit" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+{% block extra_body %}
+    <script src="{% static 'magazine/js/subscription.js' %}"></script>
+{% endblock %}
+{% endblock %}
+
